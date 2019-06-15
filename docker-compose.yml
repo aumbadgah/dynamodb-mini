@@ -1,0 +1,11 @@
+version: '3'
+services:
+  dynamodb-mini-server:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./env/local.env
+      - ./env/secrets.env
+    volumes:
+      - ${PWD}/env/api-keys.test.json:/app/env/api-keys.json
