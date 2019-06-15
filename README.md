@@ -101,6 +101,8 @@ Path to an API keys json file. See [`env/api-keys.test.json`](env/api-keys.test.
 #### AWS_ACCESS_KEY_ID
 Required, see [aws-sdk docs for setting credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html)
 
+Make sure this user has permissions to read and write to DynamoDB tables, and if necessary, to create tables.
+
 #### AWS_SECRET_ACCESS_KEY
 Required, see [aws-sdk docs for setting credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html)
 
