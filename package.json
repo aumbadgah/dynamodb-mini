@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-mini",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Manages multiple data collections in 2 DynamoDB tables",
   "main": "src/client/index.js",
   "scripts": {
