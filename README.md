@@ -21,7 +21,18 @@ Ideal use case:
 
 ## Basic usage
 
-Run server
+Create a file `api-keys.json` for your API keys
+
+```
+[
+    {
+        "application": "test-app",
+        "key": "my-api-key"
+    }
+]
+```
+
+Run server with your AWS credentials and mount `api-keys.json`
 
 ```
 docker run \
@@ -29,7 +40,7 @@ docker run \
     --env AWS_ACCESS_KEY_ID=my-aws-access-key \
     --env AWS_SECRET_ACCESS_KEY=my-aws-secret-access-key \
     --env AWS_REGION=eu-central-1 \
-    --volume $(pwd)/env/api-keys.test.json:/app/env/api-keys.json \
+    --volume $(pwd)/api-keys.json:/app/env/api-keys.json \
     --publish 3000:3000 \
     --name dynamodb-mini-server \
     aumbadgah/dynamodb-mini-server:latest
@@ -209,6 +220,11 @@ Your application's secret API key. See the `API_KEY_FILE` environment variable f
 String, required
 
 URL to your `dynamodb-mini` server
+
+##### options.axiosOptions
+See [Axios Request Config](https://github.com/axios/axios#request-config) docs for details.
+
+Notice that DynamoDB-mini extends on the `options.axiosOptions.baseURL` value.
 
 #### store.create(user, options)
 Create a collection for the user.
