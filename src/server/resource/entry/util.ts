@@ -31,7 +31,7 @@ export const prettifyEntry = (raw: EntryRaw) => {
     };
 };
 
-export const getEntrySortKey = (uuid = '', createVersion = false) => {
+export const getEntryRangeKey = (uuid = '', createVersion = false) => {
     let name = `${slugify(uuid)}#`;
 
     if (createVersion) {

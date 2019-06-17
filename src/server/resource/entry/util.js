@@ -28,7 +28,7 @@ exports.prettifyEntry = function (raw) {
             : undefined,
     };
 };
-exports.getEntrySortKey = function (uuid, createVersion) {
+exports.getEntryRangeKey = function (uuid, createVersion) {
     if (uuid === void 0) { uuid = ''; }
     if (createVersion === void 0) { createVersion = false; }
     var name = slugify_1.default(uuid) + "#";

@@ -158,7 +158,7 @@ exports.findLatest = function (user, collection, uuid, filter) { return __awaite
         switch (_a.label) {
             case 0:
                 hashKey = util_1.getCollectionRangeKey(user, collection);
-                sortKeyPartial = util_2.getEntrySortKey(uuid);
+                sortKeyPartial = util_2.getEntryRangeKey(uuid);
                 return [4 /*yield*/, find(hashKey, sortKeyPartial)];
             case 1:
                 results = _a.sent();
@@ -183,7 +183,7 @@ exports.create = function (user, collection, data) { return __awaiter(_this, voi
             case 0:
                 hashKey = util_1.getCollectionRangeKey(user, collection);
                 appendVersion = true;
-                sortKey = util_2.getEntrySortKey(v4_1.default(), appendVersion);
+                sortKey = util_2.getEntryRangeKey(v4_1.default(), appendVersion);
                 name = data.name, value = data.value;
                 return [4 /*yield*/, put(hashKey, sortKey, {
                         name: name,
@@ -204,7 +204,7 @@ exports.update = function (user, collection, entry, data) { return __awaiter(_th
             case 0:
                 hashKey = util_1.getCollectionRangeKey(user, collection);
                 appendVersion = true;
-                sortKey = util_2.getEntrySortKey(entry, appendVersion);
+                sortKey = util_2.getEntryRangeKey(entry, appendVersion);
                 name = data.name, value = data.value;
                 return [4 /*yield*/, put(hashKey, sortKey, {
                         name: name,

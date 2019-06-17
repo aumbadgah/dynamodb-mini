@@ -11,5 +11,5 @@ export declare const prettifyEntry: (raw: EntryRaw) => {
     name: string | undefined;
     value: any;
 };
-export declare const getEntrySortKey: (uuid?: string, createVersion?: boolean) => string;
+export declare const getEntryRangeKey: (uuid?: string, createVersion?: boolean) => string;
 export declare const validateEntryInput: (req: express.Request, res: express.Response, next: express.NextFunction) => void;

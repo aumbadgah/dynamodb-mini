@@ -8,7 +8,7 @@ import db from '../../db';
 import filterItems, { Filter } from '../../util/filterItems';
 import { getCollectionRangeKey } from '../collection/util';
 
-import { getEntrySortKey } from './util';
+import { getEntryRangeKey } from './util';
 
 const {
     AWS_DYNAMODB_CONSISTENT_READ,
@@ -134,7 +134,7 @@ export const findLatest = async (
     filter: string,
 ) => {
     const hashKey = getCollectionRangeKey(user, collection);
-    const sortKeyPartial = getEntrySortKey(uuid);
+    const sortKeyPartial = getEntryRangeKey(uuid);
 
     const results = await find(hashKey, sortKeyPartial);
 
@@ -161,7 +161,7 @@ export const create = async (
     const hashKey = getCollectionRangeKey(user, collection);
 
     const appendVersion = true;
-    const sortKey = getEntrySortKey(uuidV4(), appendVersion);
+    const sortKey = getEntryRangeKey(uuidV4(), appendVersion);
 
     const {
         name,
@@ -185,7 +185,7 @@ export const update = async (
     const hashKey = getCollectionRangeKey(user, collection);
 
     const appendVersion = true;
-    const sortKey = getEntrySortKey(entry, appendVersion);
+    const sortKey = getEntryRangeKey(entry, appendVersion);
 
     const {
         name,
