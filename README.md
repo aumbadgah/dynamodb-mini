@@ -106,9 +106,6 @@ Default value `false`
 #### PORT
 Default value `3000`
 
-#### API_KEY_FILE
-Path to an API keys json file. See [`env/api-keys.test.json`](env/api-keys.test.json) for an example.
-
 #### AWS_ACCESS_KEY_ID
 Required, see [aws-sdk docs for setting credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html)
 
@@ -214,7 +211,7 @@ const store = dynamomini({
 ##### options.apiSecret
 String, required
 
-Your application's secret API key. See the `API_KEY_FILE` environment variable for server side instructions.
+Your application's secret API key, that should be listed in the `api-keys.json` file.
 
 ##### options.baseURL
 String, required
