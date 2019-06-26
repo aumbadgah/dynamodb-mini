@@ -37,8 +37,19 @@ const getCollectionsEndpoint = async (req: express.Request, res: express.Respons
         return;
     }
 
-    // @ts-ignore
-    const prettyCollections = collections.map(prettifyCollection);
+    let prettyCollections;
+
+    try {
+        // @ts-ignore
+        prettyCollections = collections.map(prettifyCollection);
+    } catch(error) {
+        next({
+            status: 500,
+            message: error,
+        });
+        return;
+    }
+
     res.locals.returnData = sortBy(prettyCollections, (collection) => collection.meta.version);
 
     next();
@@ -70,8 +81,16 @@ router.get('/user/:user/collection/:collectionUuid', normalizeFilter, async (req
         return;
     }
 
-    // @ts-ignore
-    res.locals.returnData = collection.map(prettifyCollection);
+    try {
+        // @ts-ignore
+        res.locals.returnData = collection.map(prettifyCollection);
+    } catch(error) {
+        next({
+            status: 500,
+            message: error,
+        });
+        return;
+    }
 
     next();
 });

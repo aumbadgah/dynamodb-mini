@@ -40,8 +40,17 @@ router.get('/', normalizeFilter, async (req: express.Request, res: express.Respo
         return;
     }
 
-    // @ts-ignore
-    entries = entries.map(prettifyEntry);
+    try {
+        // @ts-ignore
+        entries = entries.map(prettifyEntry);
+    } catch(error) {
+        next({
+            status: 500,
+            message: error,
+        });
+        return;
+    }
+
     res.locals.returnData = sortBy(entries, (entry) => entry.meta.version);
 
     next();
@@ -70,8 +79,16 @@ router.get('/:entryUuid', normalizeFilter, async (req, res, next) => {
         return;
     }
 
-    // @ts-ignore
-    res.locals.returnData = entry.map(prettifyEntry);
+    try {
+        // @ts-ignore
+        res.locals.returnData = entry.map(prettifyEntry);
+    } catch(error) {
+        next({
+            status: 500,
+            message: error,
+        });
+        return;
+    }
 
     next();
 });
