@@ -1,4 +1,5 @@
 import * as express from 'express';
+import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import slugify from 'slugify';
 
@@ -11,22 +12,26 @@ export const prettifyEntry = (raw: EntryRaw) => {
     const collectionStartIndex = userCollection.lastIndexOf('#', (userCollection.length - 2));
     const versionStartIndex = entryVersion.lastIndexOf('#');
 
+    const user = userCollection.slice(0, collectionStartIndex);
+    const collection = userCollection.slice((collectionStartIndex + 1), (userCollection.length - 1));
+    const entry = entryVersion.slice(0, versionStartIndex);
+    const version = parseInt(entryVersion.slice((versionStartIndex + 1)), 10);
+    const deletedAt = get(raw, 'deletedAt.S');
+
+    const name = get(raw, 'name.S');
+    const valueRaw = get(raw, 'value.S');
+
     return {
         meta: {
-            user: userCollection.slice(0, collectionStartIndex),
-            collection:
-                userCollection.slice((collectionStartIndex + 1), (userCollection.length - 1)),
-            entry: entryVersion.slice(0, versionStartIndex),
-            version: parseInt(entryVersion.slice((versionStartIndex + 1)), 10),
-            deletedAt: raw.deletedAt
-                ? raw.deletedAt.S
-                : undefined,
+            user,
+            collection,
+            entry,
+            version,
+            deletedAt,
         },
-        name: raw.name
-            ? raw.name.S
-            : undefined,
-        value: raw.value
-            ? JSON.parse(raw.value.S)
+        name,
+        value: valueRaw
+            ? JSON.parse(valueRaw)
             : undefined,
     };
 };

@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import slugify from 'slugify';
 
@@ -22,21 +23,27 @@ export const getCollectionRangeKey = (
 };
 
 export const prettifyCollection = (raw: CollectionRaw) => {
-    const userCollectionVersion = raw.userCollectionVersion.S;
+    const userCollectionVersion = get(raw, 'userCollectionVersion.S');
 
     const versionStartIndex = userCollectionVersion.lastIndexOf('#');
     const collectionStartIndex = userCollectionVersion.lastIndexOf('#', (versionStartIndex - 1));
 
+    const application = get(raw, 'application.S');
+    const user = userCollectionVersion.slice(0, collectionStartIndex);
+    const collection = userCollectionVersion.slice((collectionStartIndex + 1), versionStartIndex);
+    const version = parseInt(userCollectionVersion.slice((versionStartIndex + 1)), 10);
+    const deletedAt = get(raw, 'deletedAt.S');
+    
+    const name = get(raw, 'name.S');
+
     return {
         meta: {
-            application: raw.application.S,
-            user: userCollectionVersion.slice(0, collectionStartIndex),
-            collection: userCollectionVersion.slice((collectionStartIndex + 1), versionStartIndex),
-            version: parseInt(userCollectionVersion.slice((versionStartIndex + 1)), 10),
-            deletedAt: raw.deletedAt
-                ? raw.deletedAt.S
-                : undefined,
+            application,
+            user,
+            collection,
+            version,
+            deletedAt,
         },
-        name: raw.name.S,
+        name,
     };
 };
