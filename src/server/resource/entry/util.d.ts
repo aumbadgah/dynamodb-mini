@@ -6,9 +6,9 @@ export declare const prettifyEntry: (raw: EntryRaw) => {
         collection: string;
         entry: string;
         version: number;
-        deletedAt: string | undefined;
+        deletedAt: any;
     };
-    name: string | undefined;
+    name: any;
     value: any;
 };
 export declare const getEntryRangeKey: (uuid?: string, createVersion?: boolean) => string;

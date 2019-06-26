@@ -2,11 +2,11 @@ import { CollectionRaw } from './types';
 export declare const getCollectionRangeKey: (user: string, uuid?: string, createVersion?: boolean) => string;
 export declare const prettifyCollection: (raw: CollectionRaw) => {
     meta: {
-        application: string;
-        user: string;
-        collection: string;
+        application: any;
+        user: any;
+        collection: any;
         version: number;
-        deletedAt: string | undefined;
+        deletedAt: any;
     };
-    name: string;
+    name: any;
 };

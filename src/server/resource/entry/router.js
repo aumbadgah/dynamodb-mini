@@ -70,8 +70,17 @@ router.get('/', normalizeFilter_1.default, function (req, res, next) { return __
                 });
                 return [2 /*return*/];
             case 4:
-                // @ts-ignore
-                entries = entries.map(util_1.prettifyEntry);
+                try {
+                    // @ts-ignore
+                    entries = entries.map(util_1.prettifyEntry);
+                }
+                catch (error) {
+                    next({
+                        status: 500,
+                        message: error,
+                    });
+                    return [2 /*return*/];
+                }
                 res.locals.returnData = sortBy_1.default(entries, function (entry) { return entry.meta.version; });
                 next();
                 return [2 /*return*/];
@@ -106,8 +115,17 @@ router.get('/:entryUuid', normalizeFilter_1.default, function (req, res, next) {
                     });
                     return [2 /*return*/];
                 }
-                // @ts-ignore
-                res.locals.returnData = entry.map(util_1.prettifyEntry);
+                try {
+                    // @ts-ignore
+                    res.locals.returnData = entry.map(util_1.prettifyEntry);
+                }
+                catch (error) {
+                    next({
+                        status: 500,
+                        message: error,
+                    });
+                    return [2 /*return*/];
+                }
                 next();
                 return [2 /*return*/];
         }

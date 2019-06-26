@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var get_1 = __importDefault(require("lodash/get"));
 var isEmpty_1 = __importDefault(require("lodash/isEmpty"));
 var slugify_1 = __importDefault(require("slugify"));
 exports.prettifyEntry = function (raw) {
@@ -10,21 +11,24 @@ exports.prettifyEntry = function (raw) {
     var entryVersion = raw.entryVersion.S;
     var collectionStartIndex = userCollection.lastIndexOf('#', (userCollection.length - 2));
     var versionStartIndex = entryVersion.lastIndexOf('#');
+    var user = userCollection.slice(0, collectionStartIndex);
+    var collection = userCollection.slice((collectionStartIndex + 1), (userCollection.length - 1));
+    var entry = entryVersion.slice(0, versionStartIndex);
+    var version = parseInt(entryVersion.slice((versionStartIndex + 1)), 10);
+    var deletedAt = get_1.default(raw, 'deletedAt.S');
+    var name = get_1.default(raw, 'name.S');
+    var valueRaw = get_1.default(raw, 'value.S');
     return {
         meta: {
-            user: userCollection.slice(0, collectionStartIndex),
-            collection: userCollection.slice((collectionStartIndex + 1), (userCollection.length - 1)),
-            entry: entryVersion.slice(0, versionStartIndex),
-            version: parseInt(entryVersion.slice((versionStartIndex + 1)), 10),
-            deletedAt: raw.deletedAt
-                ? raw.deletedAt.S
-                : undefined,
+            user: user,
+            collection: collection,
+            entry: entry,
+            version: version,
+            deletedAt: deletedAt,
         },
-        name: raw.name
-            ? raw.name.S
-            : undefined,
-        value: raw.value
-            ? JSON.parse(raw.value.S)
+        name: name,
+        value: valueRaw
+            ? JSON.parse(valueRaw)
             : undefined,
     };
 };

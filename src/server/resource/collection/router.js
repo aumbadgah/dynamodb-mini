@@ -76,7 +76,17 @@ var getCollectionsEndpoint = function (req, res, next) { return __awaiter(_this,
                 });
                 return [2 /*return*/];
             case 7:
-                prettyCollections = collections.map(util_1.prettifyCollection);
+                try {
+                    // @ts-ignore
+                    prettyCollections = collections.map(util_1.prettifyCollection);
+                }
+                catch (error) {
+                    next({
+                        status: 500,
+                        message: error,
+                    });
+                    return [2 /*return*/];
+                }
                 res.locals.returnData = sortBy_1.default(prettyCollections, function (collection) { return collection.meta.version; });
                 next();
                 return [2 /*return*/];
@@ -114,8 +124,17 @@ router.get('/user/:user/collection/:collectionUuid', normalizeFilter_1.default, 
                     });
                     return [2 /*return*/];
                 }
-                // @ts-ignore
-                res.locals.returnData = collection.map(util_1.prettifyCollection);
+                try {
+                    // @ts-ignore
+                    res.locals.returnData = collection.map(util_1.prettifyCollection);
+                }
+                catch (error) {
+                    next({
+                        status: 500,
+                        message: error,
+                    });
+                    return [2 /*return*/];
+                }
                 next();
                 return [2 /*return*/];
         }

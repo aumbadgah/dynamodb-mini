@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var get_1 = __importDefault(require("lodash/get"));
 var isEmpty_1 = __importDefault(require("lodash/isEmpty"));
 var slugify_1 = __importDefault(require("slugify"));
 exports.getCollectionRangeKey = function (user, uuid, createVersion) {
@@ -18,19 +19,23 @@ exports.getCollectionRangeKey = function (user, uuid, createVersion) {
     return name;
 };
 exports.prettifyCollection = function (raw) {
-    var userCollectionVersion = raw.userCollectionVersion.S;
+    var userCollectionVersion = get_1.default(raw, 'userCollectionVersion.S');
     var versionStartIndex = userCollectionVersion.lastIndexOf('#');
     var collectionStartIndex = userCollectionVersion.lastIndexOf('#', (versionStartIndex - 1));
+    var application = get_1.default(raw, 'application.S');
+    var user = userCollectionVersion.slice(0, collectionStartIndex);
+    var collection = userCollectionVersion.slice((collectionStartIndex + 1), versionStartIndex);
+    var version = parseInt(userCollectionVersion.slice((versionStartIndex + 1)), 10);
+    var deletedAt = get_1.default(raw, 'deletedAt.S');
+    var name = get_1.default(raw, 'name.S');
     return {
         meta: {
-            application: raw.application.S,
-            user: userCollectionVersion.slice(0, collectionStartIndex),
-            collection: userCollectionVersion.slice((collectionStartIndex + 1), versionStartIndex),
-            version: parseInt(userCollectionVersion.slice((versionStartIndex + 1)), 10),
-            deletedAt: raw.deletedAt
-                ? raw.deletedAt.S
-                : undefined,
+            application: application,
+            user: user,
+            collection: collection,
+            version: version,
+            deletedAt: deletedAt,
         },
-        name: raw.name.S,
+        name: name,
     };
 };
